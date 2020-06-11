@@ -1,0 +1,16 @@
+{{ range .}}
+include {{ .Name }};
+{{- end }}
+
+
+sub preflow {
+    {{ range . -}}
+    call {{ .Name }}_preflow;
+    {{ end }}   
+}
+
+sub postflow {
+    {{ range . -}}
+    call {{ .Name }}_postflow;
+    {{ end }} 
+}

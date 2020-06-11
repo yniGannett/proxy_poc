@@ -1,0 +1,14 @@
+{
+    "name": "argon",
+    "backend_address": {
+        "prod": ["argon-east.production.gannettdigital.com", "argon-west.production.gannettdigital.com"],
+        "staging": ["argon-east.staging.gannettdigital.com", "argon-east.staging.gannettdigital.com"]
+    },
+    "loadbalancer": true,
+    "port": 443,
+    "tls": true,
+    "healthcheck": {
+        "path": "/status",
+        "method": "GET"
+    }
+}

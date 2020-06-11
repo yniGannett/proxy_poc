@@ -1,0 +1,50 @@
+package main
+
+import (
+    "net/http"
+    "testing"
+    fastly "github.com/GannettDigital/go-fastly-tests"
+)
+
+{{ range . }}
+func Test{{ .Name }}Standard(t *testing.T) {
+    t.Parallel()
+    var tests = []fastly.Test{
+        fastly.Status{
+            Request: fastly.Request{
+                Description:"{{ .Name }} proxy status is 200",
+                Scheme: "https://",
+                Host: "api.usatoday.com",
+                Path: "/{{ .Name }}{{ .Healthcheck.Path }}",
+                UA: "",
+                Referer: "",
+                Cookies: []*http.Cookie{},
+                Headers: http.Header{},
+            },
+            Status: http.StatusOK,
+        },
+        fastly.Header{
+            Request: fastly.Request{
+                Description: "surrogate key is correctly appended",
+                Scheme: "https://",
+                Host: "api.usatoday.com",
+                Path: "/{{ .Name }}{{ .Healthcheck.Path }}",
+                UA: "",
+                Referer: "",
+                Cookies: []*http.Cookie{},
+                Headers: http.Header{},
+            },
+            Status: http.StatusOK,
+            Headers: http.Header{
+                "Surrogate-Key": []string{
+                    "{{ .Name }}",
+                },
+            },
+            MatchType: fastly.PartialMatch{},
+        },       
+    }
+    for _, test := range tests {
+		test.Execute(t)
+	}
+}
+{{ end }}

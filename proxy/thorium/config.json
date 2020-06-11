@@ -1,0 +1,14 @@
+{
+    "name": "thorium",
+    "backend_address": {
+        "prod": ["thorium-east.production.gannettdigital.com", "thorium-west.production.gannettdigital.com"],
+        "staging": ["thorium-east.staging.gannettdigital.com", "thorium-east.staging.gannettdigital.com"]
+    },
+    "loadbalancer": true,
+    "port": 443,
+    "tls": true,
+    "healthcheck": {
+        "path": "/status",
+        "method": "GET"
+    }
+}
